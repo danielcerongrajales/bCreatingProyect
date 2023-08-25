@@ -7,7 +7,7 @@ import com.example.bcreatingproyect.R
 import com.example.bcreatingproyect.onboarding.presentation.components.OnBoardingPager
 
 @Composable
-fun OnBoardingScreen(viewmodel: OnboardingViewModel= hiltViewModel(), onFinish: () -> Unit) {
+fun OnboardingScreen(viewmodel: OnboardingViewModel= hiltViewModel(), onFinish: () -> Unit) {
     LaunchedEffect(key1 = viewmodel.hasSeenOnboarding) {
         if (viewmodel.hasSeenOnboarding) {
             onFinish()

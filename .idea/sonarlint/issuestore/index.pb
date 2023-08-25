@@ -46,8 +46,6 @@ rapp/src/main/java/com/example/bcreatingproyect/authentication/presentation/logi
 japp/src/main/java/com/example/bcreatingproyect/authentication/presentation/signup/components/SignupForm.kt,d/9/d9e0c87668b916f134e853a9d3db3bc533584a11
 ê
 `app/src/main/java/com/example/bcreatingproyect/authentication/presentation/signup/SignupEvent.kt,c/b/cb00117183cf998faadcc4a49fa5fb9ea3d937bd
-ë
-aapp/src/main/java/com/example/bcreatingproyect/authentication/presentation/signup/SignUpScreen.kt,f/8/f88d190da4df84952edadd05f3a0b5bef15df2bc
 î
 dapp/src/main/java/com/example/bcreatingproyect/authentication/presentation/signup/SignupViewModel.kt,9/b/9b004b88dbf6173e863019f839b79df5aa982de2
 ñ
@@ -84,15 +82,9 @@ Zapp/src/main/java/com/example/bcreatingproyect/onboarding/presentation/OnBoardi
 dapp/src/main/java/com/example/bcreatingproyect/onboarding/presentation/OnboardingPagerInformation.kt,0/b/0b1e9e0bd68a5356df11f00a30dcb95e2bbf8f0c
 î
 dapp/src/main/java/com/example/bcreatingproyect/onboarding/presentation/components/OnBoardingPager.kt,e/f/ef159f9f357389c5802cedca2b673c71aeadab6b
-n
->app/src/main/java/com/example/bcreatingproyect/MainActivity.kt,c/7/c73c5a03be28a8483521ed42fbb52b518183be01
-P
- app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 g
 7app/src/main/java/com/example/bcreatingproyect/MyApp.kt,3/8/38998681cc50466cbcd68e7d83a9509adf108707
 ç
 ]app/src/main/java/com/example/bcreatingproyect/authentication/data/matcher/EmailMatcherImp.kt,9/4/9465aa0600d655a94b9349cd27092a4d2fee9f32
 ú
 lapp/src/main/java/com/example/bcreatingproyect/authentication/data/repository/AuthenticationRepositoryImp.kt,4/4/44ce6136949278941e3326338d68b870bc3b484f
-|
-Lapp/src/main/java/com/example/bcreatingproyect/navigation/NavigationRoute.kt,0/1/01ee85c9cb93a485662927fb98f0472bc330a97c

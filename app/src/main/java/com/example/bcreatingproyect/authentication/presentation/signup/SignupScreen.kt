@@ -17,7 +17,7 @@ import com.example.bcreatingproyect.R
 import com.example.bcreatingproyect.authentication.presentation.signup.components.SignupForm
 
 @Composable
-fun SignUpScreen(
+fun SignupScreen(
     onSignIn: () -> Unit,
     onLogin: () -> Unit,
     viewModel: SignupViewModel = hiltViewModel()

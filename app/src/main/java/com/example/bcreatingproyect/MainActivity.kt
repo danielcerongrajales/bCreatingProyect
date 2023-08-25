@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.bcreatingproyect.navigation.NavgationHost
+import com.example.bcreatingproyect.navigation.NavigationHost
 import com.example.bcreatingproyect.navigation.NavigationRoute
 import com.example.bcreatingproyect.ui.theme.BCreatingProyectTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navCOntroller= rememberNavController( )
-                    NavgationHost(navHostController = navCOntroller, startDestination = getStartDestination(),logout = {
+                    NavigationHost(navHostController = navCOntroller, startDestination = getStartDestination(),logout = {
                         viewmodel.logout()
                     })
                 }
