@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class SyncEntity(
+data class HabitSyncEntity(
     @PrimaryKey(autoGenerate = false)
-    val id:String
+    val id: String
 )

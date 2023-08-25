@@ -6,9 +6,6 @@ import java.time.ZonedDateTime
 
 class CompleteHabitUseCase(private val repository: HomeRepository) {
     suspend operator fun invoke(habit: Habit, date: ZonedDateTime) {
-        habit.completedDates?.let {
-
-
         val newHabit = if (habit.completedDates.contains(date.toLocalDate())) {
             habit.copy(
                 completedDates = habit.completedDates - date.toLocalDate()
@@ -19,6 +16,5 @@ class CompleteHabitUseCase(private val repository: HomeRepository) {
             )
         }
         repository.insertHabit(newHabit)
-        }
     }
 }

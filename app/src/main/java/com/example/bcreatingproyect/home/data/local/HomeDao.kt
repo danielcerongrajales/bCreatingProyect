@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.bcreatingproyect.home.data.local.entity.HabitEntity
-import com.example.bcreatingproyect.home.data.local.entity.SyncEntity
+import com.example.bcreatingproyect.home.data.local.entity.HabitSyncEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,21 +14,21 @@ interface HomeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHabit(habitEntity: HabitEntity)
 
-
-    @Query("SELECT * FROM HabitEntity WHERE id=:id")
+    @Query("SELECT * FROM HabitEntity WHERE id = :id")
     suspend fun getHabitById(id: String): HabitEntity
 
-    @Query("SELECT * FROM HabitEntity WHERE startDate <=:date")
-    fun getHabitForSelectedDate(date:Long):Flow<List<HabitEntity>>
+    @Query("SELECT * FROM HabitEntity WHERE startDate <= :date ORDER BY id ASC")
+    fun getAllHabitsForSelectedDate(date: Long): Flow<List<HabitEntity>>
 
     @Query("SELECT * FROM HabitEntity")
-    fun getAllHabits():List<HabitEntity>
+    fun getAllHabits(): List<HabitEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertHabitsSync(syncEntity: SyncEntity)
+    suspend fun insertHabitSync(habitSyncEntity: HabitSyncEntity)
 
-    @Query("SELECT * FROM SyncEntity")
-    fun getHabitSync():List<SyncEntity>
+    @Query("SELECT * FROM HabitSyncEntity")
+    fun getAllHabitsSync(): List<HabitSyncEntity>
+
     @Delete
-    suspend fun deleteHabitSync(syncEntity: SyncEntity)
+    suspend fun deleteHabitSync(habitSyncEntity: HabitSyncEntity)
 }

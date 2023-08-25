@@ -4,7 +4,7 @@ import com.example.bcreatingproyect.home.data.estension.toStartOfDateTimestamp
 import com.example.bcreatingproyect.home.data.estension.toTimeStamp
 import com.example.bcreatingproyect.home.data.estension.toZonedDateTime
 import com.example.bcreatingproyect.home.data.local.entity.HabitEntity
-import com.example.bcreatingproyect.home.data.local.entity.SyncEntity
+import com.example.bcreatingproyect.home.data.local.entity.HabitSyncEntity
 import com.example.bcreatingproyect.home.data.remote.dto.HabitDto
 import com.example.bcreatingproyect.home.data.remote.dto.HabitResponse
 import com.example.bcreatingproyect.home.domain.models.Habit
@@ -60,6 +60,6 @@ fun Habit.toDto(): HabitResponse {
     return mapOf(id to dto)
 }
 
-fun Habit.toSyncEntity(): SyncEntity {
-    return SyncEntity(id)
+fun Habit.toSyncEntity(): HabitSyncEntity {
+    return HabitSyncEntity(id)
 }

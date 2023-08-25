@@ -5,7 +5,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.bcreatingproyect.home.data.local.HomeDao
-import com.example.bcreatingproyect.home.data.local.entity.SyncEntity
+import com.example.bcreatingproyect.home.data.local.entity.HabitSyncEntity
 import com.example.bcreatingproyect.home.data.mapper.toDomain
 import com.example.bcreatingproyect.home.data.mapper.toDto
 import com.example.bcreatingproyect.home.data.remote.HomeApi
@@ -28,7 +28,7 @@ class HabitSyncWorker @AssistedInject constructor(
         if (runAttemptCount >= 3) {
             return Result.failure()
         }
-        val items=dao.getHabitSync()
+        val items=dao.getAllHabitsSync()
         return try {
             supervisorScope {
                 val jobs = items.map { items -> async { sync(items) } }
@@ -40,7 +40,7 @@ class HabitSyncWorker @AssistedInject constructor(
         }
     }
 
-    private suspend fun sync(entity: SyncEntity) {
+    private suspend fun sync(entity: HabitSyncEntity) {
         val habit = dao.getHabitById(entity.id).toDomain().toDto()
         resultOf {
             api.insertHabit(habit)

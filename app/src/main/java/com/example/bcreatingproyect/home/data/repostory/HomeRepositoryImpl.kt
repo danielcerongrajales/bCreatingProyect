@@ -27,28 +27,23 @@ import kotlinx.coroutines.flow.onStart
 import java.time.Duration
 import java.time.ZonedDateTime
 
-class HomeRepositoryImpl (private  val dao: HomeDao,
-                          private val api: HomeApi,
-                          private val alarmHandler: AlarmHandler,
-                          private val workManager: WorkManager): HomeRepository {
+class HomeRepositoryImpl(
+    private val dao: HomeDao,
+    private val api: HomeApi,
+    private val alarmHandler: AlarmHandler,
+    private val workManager: WorkManager
+) : HomeRepository {
+    override fun getAllHabitsForSelectedDate(date: ZonedDateTime): Flow<List<Habit>> {
+        val localFlow = dao.getAllHabitsForSelectedDate(date.toStartOfDateTimestamp())
+            .map { it.map { it.toDomain() } }
+        val apiFlow = getHabitsFromApi()
 
-
-
-    override fun getAllHabitsSelectedDate(date: ZonedDateTime): Flow<List<Habit>> {
-        val localFlow=  dao.getHabitForSelectedDate(date.toStartOfDateTimestamp()).map {
-            it.map {
-                it.toDomain()
-            }
-        }
-        val apiFlow=getAllHabitFromApi()
         return localFlow.combine(apiFlow) { db, _ ->
             db
         }
-
-     return   flow<List<Habit>> {emit(emptyList())  }
     }
 
-    private fun getAllHabitFromApi(): Flow<List<Habit>> {
+    private fun getHabitsFromApi(): Flow<List<Habit>> {
         return flow {
             resultOf {
                 val habits = api.getAllHabits().toDomain()
@@ -60,6 +55,16 @@ class HomeRepositoryImpl (private  val dao: HomeDao,
         }
     }
 
+    override suspend fun insertHabit(habit: Habit) {
+        handleAlarm(habit)
+        dao.insertHabit(habit.toEntity())
+        resultOf {
+            api.insertHabit(habit.toDto())
+        }.onFailure {
+            dao.insertHabitSync(habit.toSyncEntity())
+        }
+    }
+
     private suspend fun insertHabits(habits: List<Habit>) {
         habits.forEach {
             handleAlarm(it)
@@ -67,22 +72,13 @@ class HomeRepositoryImpl (private  val dao: HomeDao,
         }
     }
 
-    private suspend fun handleAlarm(habit: Habit){
+    private suspend fun handleAlarm(habit: Habit) {
         try {
-            val previous= dao.getHabitById(habit.id)
-//            alarmHandler.cancel(previous.toDomain())
-        }catch (e:Exception){ }
-        alarmHandler.setRecurringAlarm(habit)
-    }
-
-    override suspend fun insertHabit(habit: Habit) {
-        handleAlarm(habit = habit)
-        dao.insertHabit(habit.toEntity())
-        resultOf {
-            api.insertHabit(habit.toDto())
-        }.onFailure {
-            dao.insertHabitsSync(habit.toSyncEntity())
+            val previous = dao.getHabitById(habit.id)
+            alarmHandler.cancel(previous.toDomain())
+        } catch (e: Exception) { /* Habit doesn't exist */
         }
+        alarmHandler.setRecurringAlarm(habit)
     }
 
     override suspend fun getHabitById(id: String): Habit {
