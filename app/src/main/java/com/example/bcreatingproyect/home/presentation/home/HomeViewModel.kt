@@ -13,10 +13,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(  private val homeUseCases: HomeUseCases) : ViewModel() {
+class HomeViewModel @Inject constructor(
+    private val homeUseCases: HomeUseCases
+) : ViewModel() {
     var state by mutableStateOf(HomeState())
         private set
     private var currentDayJob: Job? = null
+
     init {
         getHabits()
         viewModelScope.launch {
@@ -30,16 +33,16 @@ class HomeViewModel @Inject constructor(  private val homeUseCases: HomeUseCases
                 state = state.copy(
                     selectedDate = event.date
                 )
-
-            getHabits()
-        }
-        is HomeEvent.CompleteHabit -> {
-            viewModelScope.launch {
-                homeUseCases.completeHabitUseCase(event.habit, state.selectedDate)
+                getHabits()
+            }
+            is HomeEvent.CompleteHabit -> {
+                viewModelScope.launch {
+                    homeUseCases.completeHabitUseCase(event.habit, state.selectedDate)
+                }
             }
         }
-        }
     }
+
     private fun getHabits() {
         currentDayJob?.cancel()
         currentDayJob = viewModelScope.launch {

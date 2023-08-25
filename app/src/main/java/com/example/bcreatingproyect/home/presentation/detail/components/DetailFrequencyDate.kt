@@ -44,7 +44,7 @@ fun DetailFrequencyDate(
         Spacer(modifier = Modifier.height(8.dp))
         HabitCheckbox(
             isChecked = isChecked,
-            onCheckedChangeListener = onCheckedChange,
+            onCheckedChange = onCheckedChange,
             modifier = Modifier.semantics { contentDescription = date.name }
         )
     }

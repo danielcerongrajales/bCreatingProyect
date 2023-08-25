@@ -1,6 +1,5 @@
 package com.example.bcreatingproyect.core.presentation
 
-import android.widget.CompoundButton.OnCheckedChangeListener
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -8,7 +7,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -19,14 +17,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HabitCheckbox(isChecked:Boolean,modifier:Modifier=Modifier,onCheckedChangeListener: () ->Unit,) {
+fun HabitCheckbox(isChecked:Boolean, modifier:Modifier=Modifier, onCheckedChange: () ->Unit,) {
     val backgroundColor=if(isChecked)MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.background
     Box (modifier = modifier
         .size(15.dp)
         .clip(RoundedCornerShape(12.dp))
         .background(color = backgroundColor)
         .clickable {
-            onCheckedChangeListener()
+            onCheckedChange()
         }, contentAlignment = Alignment.Center){
         if(isChecked){
             Icon(imageVector = Icons.Default.Check, contentDescription ="", tint = MaterialTheme.colorScheme.tertiary )

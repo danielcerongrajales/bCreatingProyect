@@ -25,33 +25,44 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HomeQuote(quote:String,
-              author:String,
-              @DrawableRes imageId:Int,
-              modifier: Modifier=Modifier) {
-    Box(modifier = modifier
-        .fillMaxWidth()
-        .clip(RoundedCornerShape(12.dp))
-        .height(146.dp)
-        .background(Color.White)){
-        Image(painter = painterResource(id = imageId), contentDescription ="" ,
+fun HomeQuote(
+    quote: String,
+    author: String,
+    @DrawableRes imageId: Int,
+    modifier: Modifier = Modifier
+) {
+    Box(
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).height(146.dp)
+            .background(color = Color.White)
+    ) {
+        Image(
+            painter = painterResource(id = imageId),
+            contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier.align(Alignment.TopEnd).graphicsLayer(
                 scaleX = 2.5f,
                 scaleY = 2.5f
-            ).offset(x=(-12).dp,
-                y = 27.dp))
-        Column (
-            Modifier
-                .padding(vertical = 26.dp, horizontal = 16.dp)
+            ).offset(x = (-12).dp, y = 27.dp)
+        )
+        Column(
+            modifier = Modifier.padding(vertical = 26.dp, horizontal = 16.dp)
                 .align(Alignment.TopStart)
-                .padding(end = 100.dp)){
-            Text(text = quote.uppercase(), color = MaterialTheme.colorScheme.tertiary, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-
-            Text(text = "- ${author.uppercase()}", color = MaterialTheme.colorScheme.tertiary.copy(
-                alpha = 0.5f
-            ), fontSize = 12.sp, fontWeight = FontWeight.Bold)
-
+                .padding(end = 100.dp)
+        ) {
+            Text(
+                text = quote.uppercase(),
+                color = MaterialTheme.colorScheme.tertiary,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "- ${author.uppercase()}",
+                color = MaterialTheme.colorScheme.tertiary.copy(
+                    alpha = 0.5f
+                ),
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

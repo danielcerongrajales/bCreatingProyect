@@ -28,6 +28,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,10 +42,12 @@ import com.example.bcreatingproyect.home.presentation.home.components.HomeQuote
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen( onNewHabit: () -> Unit,
-                onSettings: () -> Unit,
-                onEditHabit:(String)->Unit,
-                viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+    onNewHabit: () -> Unit,
+    onSettings: () -> Unit,
+    onEditHabit: (String) -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
     val state = viewModel.state
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -60,7 +64,10 @@ fun HomeScreen( onNewHabit: () -> Unit,
             FloatingActionButton(
                 onClick = onNewHabit,
                 containerColor = MaterialTheme.colorScheme.primary,
-                shape = CircleShape
+                shape = CircleShape,
+                modifier = Modifier.semantics {
+                    contentDescription = "Add a new habit"
+                }
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -73,27 +80,22 @@ fun HomeScreen( onNewHabit: () -> Unit,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             HomeAskPermission(permission = Manifest.permission.POST_NOTIFICATIONS)
         }
-        LazyColumn(modifier = Modifier
-            .padding(it)
-            .padding(start = 20.dp),
+        LazyColumn(
+            modifier = Modifier.padding(it).padding(start = 20.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
             contentPadding = PaddingValues(bottom = 20.dp)
         ) {
             item {
-
-
-            HomeQuote(
-                quote = "We first make our habits, and then our habits make us.",
-                author = "Anonymous",
-                imageId = R.drawable.onboarding1,
-                modifier = Modifier.padding(end = 20.dp)
-            )
+                HomeQuote(
+                    quote = "We first make our habits, and then our habits make us.",
+                    author = "Anonymous",
+                    imageId = R.drawable.onboarding1,
+                    modifier = Modifier.padding(end = 20.dp)
+                )
             }
             item {
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(end = 20.dp),
+                    modifier = Modifier.fillMaxWidth().padding(end = 20.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
@@ -110,19 +112,17 @@ fun HomeScreen( onNewHabit: () -> Unit,
                             viewModel.onEvent(HomeEvent.ChangeDate(it))
                         }
                     )
-
                 }
-
             }
-            items(state.habits){
+
+            items(state.habits) {
                 HomeHabit(
                     habit = it,
                     selectedDate = state.selectedDate.toLocalDate(),
-                    onCheckedChangeListener = {viewModel.onEvent(HomeEvent.CompleteHabit(it))},
-                    onClickListener = {onEditHabit(it.id) }
+                    onCheckedChange = { viewModel.onEvent(HomeEvent.CompleteHabit(it)) },
+                    onHabitClick = { onEditHabit(it.id) }
                 )
             }
-
         }
     }
 }

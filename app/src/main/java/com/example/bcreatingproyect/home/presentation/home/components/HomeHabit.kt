@@ -23,31 +23,26 @@ import com.example.bcreatingproyect.home.domain.models.Habit
 import java.time.LocalDate
 
 @Composable
-fun HomeHabit (
+fun HomeHabit(
     habit: Habit,
-    selectedDate:LocalDate,
-    onCheckedChangeListener: ()->Unit,
-    onClickListener: ()->Unit,
-    modifier: Modifier=Modifier
-
-){
-    Row (
-        modifier
-            .fillMaxWidth()
+    selectedDate: LocalDate,
+    onCheckedChange: () -> Unit,
+    onHabitClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier.fillMaxWidth()
             .clip(RoundedCornerShape(topStart = 12.dp, bottomStart = 12.dp))
-            .background(color = Color.White)
+            .background(Color.White)
             .clickable {
-                onClickListener()
-            }
-            .padding(19.dp),
+                onHabitClick()
+            }.padding(19.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
-    ){
+    ) {
         Text(text = habit.name, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-        habit.completedDates?.let {
-            HabitCheckbox(isChecked =  it.contains(selectedDate)) {
-                onCheckedChangeListener()
-            }
+        HabitCheckbox(isChecked = habit.completedDates.contains(selectedDate)) {
+            onCheckedChange()
         }
     }
 }

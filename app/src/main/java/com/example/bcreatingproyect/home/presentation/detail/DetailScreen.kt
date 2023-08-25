@@ -52,7 +52,7 @@ fun DetailScreen(
         }
     }
 
-    val clockState = rememberSheetState()
+    val clockState = com.maxkeppeker.sheets.core.models.base.rememberSheetState()
     ClockDialog(
         state = clockState,
         selection = ClockSelection.HoursMinutes { hours, minutes ->
@@ -64,33 +64,33 @@ fun DetailScreen(
         )
     )
 
-    Scaffold(modifier = Modifier.fillMaxSize(), topBar = {
-        CenterAlignedTopAppBar(title = {
-            Text(text = "New Habit")
-        }, navigationIcon = {
-            IconButton(onClick = onBack) {
-                Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
-            }
-        }   )},
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { viewModel.onEvent(DetailEvent.HabitSave) },
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    shape = CircleShape
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = "Create Habit",
-                        tint = MaterialTheme.colorScheme.tertiary
-                    )
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            CenterAlignedTopAppBar(title = {
+                Text(text = "New Habit")
+            }, navigationIcon = {
+                IconButton(onClick = onBack) {
+                    Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "back")
                 }
-
-    }) {
+            })
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { viewModel.onEvent(DetailEvent.HabitSave) },
+                containerColor = MaterialTheme.colorScheme.primary,
+                shape = CircleShape
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Create Habit",
+                    tint = MaterialTheme.colorScheme.tertiary
+                )
+            }
+        }
+    ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-                .padding(horizontal = 20.dp),
+            modifier = Modifier.fillMaxSize().padding(it).padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             HabitTextfield(

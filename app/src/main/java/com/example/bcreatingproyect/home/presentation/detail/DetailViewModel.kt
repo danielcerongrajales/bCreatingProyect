@@ -14,28 +14,30 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(private val savedStateHandle: SavedStateHandle,
-private val detailUseCases: DetailUseCases) : ViewModel() {
+class DetailViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+    private val detailUseCases: DetailUseCases
+) : ViewModel() {
     var state by mutableStateOf(DetailState())
         private set
+
     init {
-        val id= savedStateHandle.get<String?>("habitId")
-        if(id!=null){
+        val id = savedStateHandle.get<String?>("habitId")
+        if (id != null) {
             viewModelScope.launch {
                 val habit = detailUseCases.getHabitByIdUseCase(id)
-                state = habit.completedDates?.let {
-                    state.copy(
-                        id = habit.id,
-                        habitName = habit.name,
-                        frequency = habit.frequency,
-                        reminder = habit.reminder,
-                        completedDates = it,
-                        startDate = habit.startDate
-                    )
-                }!!
+                state = state.copy(
+                    id = habit.id,
+                    habitName = habit.name,
+                    frequency = habit.frequency,
+                    reminder = habit.reminder,
+                    completedDates = habit.completedDates,
+                    startDate = habit.startDate
+                )
             }
         }
     }
+
     fun onEvent(event: DetailEvent) {
         when (event) {
             is DetailEvent.FrequencyChange -> {
@@ -50,7 +52,7 @@ private val detailUseCases: DetailUseCases) : ViewModel() {
             }
             DetailEvent.HabitSave -> {
                 viewModelScope.launch {
-                    val habit= Habit(
+                    val habit = Habit(
                         id = state.id ?: UUID.randomUUID().toString(),
                         name = state.habitName,
                         frequency = state.frequency,
@@ -60,7 +62,7 @@ private val detailUseCases: DetailUseCases) : ViewModel() {
                     )
                     detailUseCases.insertHabitUseCase(habit)
                 }
-                state= state.copy(
+                state = state.copy(
                     isSaved = true
                 )
             }
