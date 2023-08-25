@@ -18,7 +18,7 @@ fun HabitEntity.toDomain(): Habit {
         frequency = this.frequency.map { DayOfWeek.of(it) },
         completedDates = this.completedDates.map { it.toZonedDateTime().toLocalDate() },
         reminder = this.reminder.toZonedDateTime().toLocalTime(),
-        startDate = ZonedDateTime.now()
+        startDate = this.startDate.toZonedDateTime()
     )
 }
 

@@ -2,7 +2,7 @@ package com.example.bcreatingproyect.home.data.remote.dto
 
 
 
-data class HabitDto (
+data class HabitDto(
     val name: String,
     val reminder: Long,
     val startDate: Long,

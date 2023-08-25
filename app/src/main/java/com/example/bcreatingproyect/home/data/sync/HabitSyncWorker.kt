@@ -20,15 +20,16 @@ import kotlinx.coroutines.supervisorScope
 class HabitSyncWorker @AssistedInject constructor(
     @Assisted val context: Context,
     @Assisted val workerParameters: WorkerParameters,
-    private val api:HomeApi,
-    private val dao: HomeDao):CoroutineWorker(context,workerParameters) {
-
-
+    private val api: HomeApi,
+    private val dao: HomeDao
+) : CoroutineWorker(context, workerParameters) {
     override suspend fun doWork(): Result {
         if (runAttemptCount >= 3) {
             return Result.failure()
         }
-        val items=dao.getAllHabitsSync()
+
+        val items = dao.getAllHabitsSync()
+
         return try {
             supervisorScope {
                 val jobs = items.map { items -> async { sync(items) } }

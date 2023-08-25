@@ -11,15 +11,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BootReceiver:BroadcastReceiver() {
+class BootReceiver : BroadcastReceiver() {
     @Inject
     lateinit var alarmHandler: AlarmHandler
+
     @Inject
     lateinit var homeDao: HomeDao
 
-    override fun onReceive(p0: Context?, p1: Intent?) =goAsync{
-        if(p0==null || p1== null) return@goAsync
-        if(p1.action != Intent.ACTION_BOOT_COMPLETED) return@goAsync
+    override fun onReceive(context: Context?, intent: Intent?) = goAsync {
+        if (context == null || intent == null) return@goAsync
+        if (intent.action != Intent.ACTION_BOOT_COMPLETED) return@goAsync
+
         val items = homeDao.getAllHabits()
         items.forEach {
             alarmHandler.setRecurringAlarm(it.toDomain())

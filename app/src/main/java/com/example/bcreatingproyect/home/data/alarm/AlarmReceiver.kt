@@ -17,48 +17,48 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AlarmReceiver: BroadcastReceiver() {
+class AlarmReceiver : BroadcastReceiver() {
     companion object {
-        const val HABIT_ID="habit_id"
-        private const val CHANNEL_ID= "habits_channel2"
+        const val HABIT_ID = "habit_id"
+        private const val CHANNEL_ID = "habits_channel"
     }
 
     @Inject
     lateinit var repository: HomeRepository
+
     @Inject
     lateinit var alarmHandler: AlarmHandler
 
-    override fun onReceive(p0: Context?, p1: Intent?)=goAsync {
-        if (p0==null || p1==null)return@goAsync
-        val id= p1.getStringExtra(HABIT_ID)?:return@goAsync
-        val habit =repository.getHabitById(id)
-        createNotificationChannel(p0)
-        habit.completedDates?.let {
-            if(!it.contains(LocalDate.now())){
-                showNotification(habit,p0)
-            }
+    override fun onReceive(context: Context?, intent: Intent?) = goAsync {
+        if (context == null || intent == null) return@goAsync
+        val id = intent.getStringExtra(HABIT_ID) ?: return@goAsync
+        val habit = repository.getHabitById(id)
+        createNotificationChannel(context)
+        if (!habit.completedDates.contains(LocalDate.now())) {
+            showNotification(context, habit)
         }
-
         alarmHandler.setRecurringAlarm(habit)
     }
 
-    private fun showNotification(habit: Habit, context: Context) {
-        val notificationManager= context.getSystemService(NotificationManager::class.java)
-        val  notification= NotificationCompat.Builder(context, CHANNEL_ID).setContentTitle(habit.name).setSmallIcon(
-            R.drawable.notification_icon
-        ).setAutoCancel(true).build()
-        notificationManager.notify(habit.id.hashCode(),notification)
+    private fun showNotification(context: Context, habit: Habit) {
+        val notificationManager = context.getSystemService(NotificationManager::class.java)
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setContentTitle(habit.name)
+            .setSmallIcon(R.drawable.notification_icon)
+            .setAutoCancel(true)
+            .build()
+        notificationManager.notify(habit.id.hashCode(), notification)
     }
 
     private fun createNotificationChannel(context: Context) {
-        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
-            val channel=NotificationChannel(
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Habit reminder chanel",
+                "Habit Reminder Channel",
                 NotificationManager.IMPORTANCE_HIGH
             )
-            channel.description="Get your habits Reminder"
-            val notificationManager= context.getSystemService(NotificationManager::class.java)
+            channel.description = "Get your habits reminder!"
+            val notificationManager = context.getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
         }
     }
