@@ -100,8 +100,6 @@ n
 >app/src/main/java/com/example/bcreatingproyect/MainActivity.kt,c/7/c73c5a03be28a8483521ed42fbb52b518183be01
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
-t
-Dapp/src/main/java/com/example/bcreatingproyect/home/di/HomeModule.kt,2/b/2bee4577f814d82252c2719488df81a296f322f5
 g
 7app/src/main/java/com/example/bcreatingproyect/MyApp.kt,3/8/38998681cc50466cbcd68e7d83a9509adf108707
 ç

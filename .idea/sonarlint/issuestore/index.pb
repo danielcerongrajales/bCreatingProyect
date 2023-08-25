@@ -98,8 +98,6 @@ dapp/src/main/java/com/example/bcreatingproyect/onboarding/presentation/componen
 _app/src/main/java/com/example/bcreatingproyect/home/data/estension/BroadcastReciverExtension.kt,6/9/69bcaadc7832cf6211e552e41101a38dfa581944
 n
 >app/src/main/java/com/example/bcreatingproyect/MainActivity.kt,c/7/c73c5a03be28a8483521ed42fbb52b518183be01
-t
-Dapp/src/main/java/com/example/bcreatingproyect/home/di/HomeModule.kt,2/b/2bee4577f814d82252c2719488df81a296f322f5
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 g

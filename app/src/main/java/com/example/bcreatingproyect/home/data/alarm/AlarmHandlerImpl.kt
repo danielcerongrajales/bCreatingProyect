@@ -11,7 +11,7 @@ import com.example.bcreatingproyect.home.domain.models.Habit
 import java.time.DayOfWeek
 import java.time.ZonedDateTime
 
-class AlarmHandlerImp(private val context: Context):AlarmHandler {
+class AlarmHandlerImpl(private val context: Context):AlarmHandler {
     private val alarmManager= context.getSystemService(AlarmManager::class.java)
     override fun setRecurringAlarm(habit: Habit) {
         val nextOcurrence= calculateNextOcurrence(habit)
