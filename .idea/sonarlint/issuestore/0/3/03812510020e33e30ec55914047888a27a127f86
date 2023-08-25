@@ -1,0 +1,4 @@
+
+fkotlin:S107&"HThis function has 11 parameters, which is greater than the 7 authorized.(ßˆ¿ì8Ê¹§°ž1
+fkotlin:S107E"HThis function has 12 parameters, which is greater than the 7 authorized.(ÐÈÜš8Ê¹§°ž1
+qkotlin:S3776E"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ÐÈÜš8Í¹§°ž1
