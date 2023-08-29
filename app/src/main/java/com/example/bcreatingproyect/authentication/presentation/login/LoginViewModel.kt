@@ -5,15 +5,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bcreatingproyect.authentication.domain.repository.AuthenticationRepository
+import com.example.bcreatingproyect.core.di.IoDispatcher
 import com.example.bcreatingproyect.authentication.domain.useCase.LoginUseCases
 import com.example.bcreatingproyect.authentication.domain.useCase.PasswordResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginUseCases: LoginUseCases):ViewModel(){
+class LoginViewModel @Inject constructor(
+    private val loginUseCases: LoginUseCases,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher):ViewModel(){
     var state by mutableStateOf(LoginState())
     private set
     fun onEvent(event: LoginEvent){
@@ -51,7 +54,7 @@ class LoginViewModel @Inject constructor(private val loginUseCases: LoginUseCase
             state = state.copy(
                 isLoading = true
             )
-            viewModelScope.launch {
+            viewModelScope.launch (dispatcher){
                 loginUseCases.loginWithEmailUseCase(state.email, state.password).onSuccess {
                     state = state.copy(
                         isLoggedIn = true
